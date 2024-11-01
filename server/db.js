@@ -12,4 +12,6 @@ port: process.env.PORT
 
 pool.connect().then(() =>  console.log('DB connected')).catch(e => console.log('DB doesnt connected', e));
 
-module.exports = pool;
+module.exports = {
+    query: (text,params) => pool.query(text,params)
+}
