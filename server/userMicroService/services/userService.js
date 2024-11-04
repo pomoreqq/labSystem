@@ -10,7 +10,6 @@ async function getAllUsers() {
 
 
 async function getUserById(id){
-    console.log("ID in service:", id);
     return await userModel.getUserById(id)
 };
 

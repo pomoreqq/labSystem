@@ -16,7 +16,7 @@ const createUser = async(firstName,lastName,email,password,roleId) => {
 }
 
 const getUserById = async (id) => {
-    console.log("ID in service:", id);
+   
     const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
     return result.rows[0];
 };
