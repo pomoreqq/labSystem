@@ -1,11 +1,11 @@
-const userService = require('../services/userService');
+const sampleService = require('../services/sampleService');
 
 
-async function  getAllUsers(req,res) {
+async function  getAllSamples(req,res) {
     try {
-        const users = await userService.getAllUsers()
+        const samples = await sampleService.getAllsamples()
         res.status(200).json({
-            users: users
+            samples: samples
         })
     } catch (e) {
         res.status(500).json({
@@ -17,20 +17,20 @@ async function  getAllUsers(req,res) {
 
 
 
-async function getUserById(req,res) {
+async function getSampleById(req,res) {
     
     try {
-        const user = await userService.getUserById(req.params.id);
+        const sample = await sampleService.getSampleById(req.params.id);
 
-        if (!user) {
+        if (!sample) {
            return res.status(404).json({
-                message: 'user not found!'
+                message: 'sample not found!'
             })
         }
 
         res.status(200).json({
-            message: ' user found!',
-            user: user
+            message: ' sample found!',
+            sample: sample
         })
     } catch (e) {
         res.status(500).json({
@@ -41,13 +41,13 @@ async function getUserById(req,res) {
 }
 
 
-async function createUser(req,res) {
+async function createSample(req,res) {
     try {
-        const user = await userService.createUser(req.body)
+        const sample = await sampleService.createSample(req.body)
 
         res.status(201).json({
-            message: ' user created sucessfully!',
-            user: user
+            message: ' sample created sucessfully!',
+            sample: sample
         })
     } catch (e) {
         res.status(500).json({
@@ -58,17 +58,18 @@ async function createUser(req,res) {
 }
 
 
-async function updateUser(req,res) {
+async function updateSample(req,res) {
     try {
-        const user = await userService.updateUser(req.body,req.params.id)
+        const sample = await sampleService.updateSample(req.body,req.params.id)
 
-        if (!user) {
+        if (!sample) {
             return res.status(404).json({
-                message: 'user not found'
+                message: 'sample not found'
             })
         }
         res.status(200).json({
-            message: 'user updated sucessfully'
+            message: 'sample updated sucessfully',
+            sample: sample,
         })
     } catch (e) {
         res.status(500).json({
@@ -79,19 +80,19 @@ async function updateUser(req,res) {
 }
 
 
-async function deleteUser(req,res) {
+async function deleteSample(req,res) {
     try {
-        const user = await userService.deleteUser(req.params.id);
+        const sample = await sampleService.deleteSample(req.params.id);
 
-        if (!user) {
+        if (!sample) {
            return res.status(404).json({
-                message: 'user not found!'
+                message: 'sample not found!'
             })
         }
 
         res.status(200).json({
-            message: ' user deleted!',
-            user: user
+            message: ' sample deleted!',
+            sample: sample
         })
     } catch (e) {
         res.status(500).json({
@@ -103,9 +104,9 @@ async function deleteUser(req,res) {
 
 
 module.exports = {
-    getAllUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser
+    getAllSamples,
+    getSampleById,
+    createSample,
+    updateSample,
+    deleteSample
 };
