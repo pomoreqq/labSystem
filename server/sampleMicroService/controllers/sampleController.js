@@ -1,4 +1,4 @@
-const sampleService = require('../services/sampleService');
+const sampleService = require('../services/sampleServices');
 
 
 async function  getAllSamples(req,res) {
