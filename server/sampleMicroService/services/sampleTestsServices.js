@@ -31,3 +31,12 @@ const updateTestFromSample = async(sampleId, data, testId) => {
 const deleteTestFromSample = async (sampleId, testId) => {
     return await sampleTestsModel.deleteTestFromSample(sampleId,testId)
 }
+
+
+module.exports = {
+    addTestToSample,
+    deleteTestFromSample,
+    updateTestFromSample,
+    getAllTestsFromSample,
+    getTestByIdFromSample
+}

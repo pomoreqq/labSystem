@@ -3,7 +3,7 @@ const sampleService = require('../services/sampleServices');
 
 async function  getAllSamples(req,res) {
     try {
-        const samples = await sampleService.getAllsamples()
+        const samples = await sampleService.getAllSamples()
         res.status(200).json({
             samples: samples
         })
