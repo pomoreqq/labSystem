@@ -1,5 +1,5 @@
 const sampleService = require('../services/sampleServices');
-
+const ValidationError = require('../helpers/validationErrorExtends')
 
 async function  getAllSamples(req,res) {
     try {
@@ -33,6 +33,9 @@ async function getSampleById(req,res) {
             sample: sample
         })
     } catch (e) {
+
+      
+
         res.status(500).json({
             message: 'something went wrong',
             errorMessage: e.message
@@ -50,6 +53,11 @@ async function createSample(req,res) {
             sample: sample
         })
     } catch (e) {
+
+        if (e instanceof ValidationError) {
+            return res.status(400).json({message: e.message, errors: e.errors})
+        }
+
         res.status(500).json({
             message: 'something went wrong',
             errorMessage: e.message

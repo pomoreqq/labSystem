@@ -6,10 +6,12 @@ const sampleRoutes = require('./routes/sampleRoutes')
 const sampleTestRoutes = require('./routes/sampleTestsRoutes')
 
 
-const serverPORT = process.env.USERSERVICEPORT || 3002
+const serverPORT = process.env.SAMPLESMICROSERVICE || 3002
 
 
 const app = express()
+
+app.use(express.json())
 
 app.use('/api', sampleRoutes)
 app.use('/api', sampleTestRoutes)

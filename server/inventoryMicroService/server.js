@@ -3,7 +3,7 @@ dotenv.config({ path: '../.env' });
 const express = require('express');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const supplierRoutes = require('./routes/supplierRoutes');
-const serverPORT = process.env.INVENTORYSERVICEPORT || 3002;
+const serverPORT = process.env.INVENTORYSERVICEPORT || 3006;
 
 const app = express();
 app.use(express.json());

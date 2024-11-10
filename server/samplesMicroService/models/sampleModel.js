@@ -17,10 +17,15 @@ const getSampleById = async(id) => {
 }
 
 
-const createSample = async(cilentId, sampleType,storageConditions,status,createdBy) => {
-    const result = await db.query(`INSERT INTO samples VALUES (clientId,sampleType,storageConditions,status,creadtedBy) RETURNING *`,[cilentId,sampleType,storageConditions,status,createdBy])
+const createSample = async(clientId, sampleType,storageConditions,sampleStatus,createdBy) => {
+    const result = await db.query(`INSERT INTO samples (clientId, sampleType, storageConditions, sampleStatus, createdBy) VALUES ($1, $2, $3, $4, $5) RETURNING *`
+,[clientId,sampleType,storageConditions,sampleStatus,createdBy])
 
     return result.rows[0]
+}
+
+const updateSampleIdentifer = async (sampleId, identifier,qrCode) => {
+    await db.query(`UPDATE samples SET identifier = $1, qrCode = $2 WHERE id = $3`,[identifier,qrCode,sampleId]);
 }
 
 
@@ -50,5 +55,6 @@ module.exports = {
     getAllSamples,getSampleById,
     createSample,
     deleteSamples,
-    updateSample
+    updateSample,
+    updateSampleIdentifer
 }

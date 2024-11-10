@@ -106,3 +106,21 @@ CREATE TABLE reports (
 
 
 
+ALTER TABLE samples
+ADD COLUMN identifer VARCHAR(255) UNIQUE;
+
+
+CREATE TYPE sample_type_enum AS ENUM ('Chemical', 'Biological', 'Microbiological', 'Toxicological', 'Environmental', 'Food', 'Pharmaceutical', 'Cosmetological', 'Genetical', 'Material', 'Industrial');
+
+
+ALTER TABLE samples
+MODIFY sampleType ENUM('Chemical','Biological','Microbiological','Toxicological','Enviromental','Food','Pharmaceutical','Cosmetological','Genetical','Material','Industrial') NOT NULL;
+
+
+
+ALTER TABLE samples
+ALTER COLUMN storageConditions TYPE JSONB;
+
+
+
+CREATE ENUM statusType as ENUM ('Registered', 'ReadyToAnalysis', 'InAnalysis', 'analysisCompleted', 'approved', 'released', 'archivized')
