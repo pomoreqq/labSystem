@@ -29,8 +29,10 @@ const updateSampleIdentifer = async (sampleId, identifier,qrCode) => {
 }
 
 
+
 const updateSample = async(clientId,sampleType,storageConditions,sampleStatus,createdBy, id) => {
     
+   
     const result = await db.query(`UPDATE samples SET
         clientId = COALESCE($1,clientId),
         sampleType = COALESCE($2,sampleType),
@@ -39,7 +41,8 @@ const updateSample = async(clientId,sampleType,storageConditions,sampleStatus,cr
         createdBy = COALESCE($5,createdBy)
         WHERE id = $6 RETURNING *`, [clientId,sampleType,storageConditions,sampleStatus,createdBy,id])
 
-
+        
+        
         return result.rows[0]
 }
 
@@ -51,11 +54,16 @@ const deleteSamples = async(id) => {
     return result.rows[0]
 }
 
+const insertIntoSampleHistoryUpdateOrDelete = async(sampleId,action,previousState,newState,performedBy) => {
+    await db.query(`INSERT INTO sampleHistory (sampleId,action,previousState,newState,performedBy)
+        VALUES ($1,$2,$3,$4,$5)`,[sampleId,action,previousState,newState,performedBy])
+}
 
 module.exports = {
     getAllSamples,getSampleById,
     createSample,
     deleteSamples,
     updateSample,
-    updateSampleIdentifer
+    updateSampleIdentifer,
+    insertIntoSampleHistoryUpdateOrDelete
 }

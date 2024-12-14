@@ -70,7 +70,7 @@ async function updateSample(req,res) {
     
     try {
         const sample = await sampleService.updateSample(req.body,req.params.id)
-
+        
         if (!sample) {
             return res.status(404).json({
                 message: 'sample not found'

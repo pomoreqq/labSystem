@@ -15,7 +15,7 @@ const addTestToSample = async (sampleId,testType,testResult,performedBy) => {
 const getAllTestsFromSample = async (sampleId) => {
     const result = await db.query(`SELECT * FROM sampleTests WHERE sampleId = $1`, [sampleId])
 
-    return result.rows[0]
+    return result.rows
 }
 
 const getTestByIdFromSample = async (sampleId,id) => {

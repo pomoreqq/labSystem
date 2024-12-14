@@ -2,8 +2,8 @@ const sampleModel = require('../models/sampleModel')
 const {v4: uuidv4} = require('uuid')
 const qrcode = require('qrcode')
 const validationError = require('../helpers/validationErrorExtends')
-
 const validateJsonData = require('../helpers/validateStorageJsonData')
+const sampleTestsModel = require('../models/sampleTestsModel')
 
 const getAllSamples =  async () => {
     return await sampleModel.getAllSamples();
@@ -61,15 +61,64 @@ const createSample = async(data) => {
 }
 
 
-const updateSample = async(data,id) => {
+const updateSample = async (data, id) => {
+
+    const existingSample = await sampleModel.getSampleById(id);
+    if (!existingSample) {
+        throw new Error('Próbka o podanym ID nie istnieje');
+    }
+
+    const sanitizedData = {
+        clientId: data.clientId !== undefined ? data.clientId : existingSample.clientid,
+        sampleType: data.sampleType !== undefined ? data.sampleType : existingSample.sampletype,
+        storageConditions: data.storageConditions !== undefined ? data.storageConditions : existingSample.storageconditions,
+        sampleStatus: data.sampleStatus !== undefined ? data.sampleStatus : existingSample.samplestatus,
+        createdBy: data.createdBy !== undefined ? data.createdBy : existingSample.createdby
+    };
+
+    
+    const updateAction = 'updateStatus'
    
-    const {clientId, sampleType,storageConditions, status,createdBy} = data;
-    console.log("Data passed to updateSample:", clientId, sampleType, storageConditions, status, createdBy, id);
-    return await sampleModel.updateSample(clientId,sampleType,storageConditions,status,createdBy,id);
-}
+    const updatedSample = await sampleModel.updateSample(
+        sanitizedData.clientId,
+        sanitizedData.sampleType,
+        sanitizedData.storageConditions,
+        sanitizedData.sampleStatus,
+        sanitizedData.createdBy,
+        id
+    );
+
+    await sampleModel.insertIntoSampleHistoryUpdateOrDelete(id,updateAction,existingSample,sanitizedData,sanitizedData.createdBy)
+
+    return updatedSample;
+};
 
 
 const deleteSample = async(id) => {
+
+    const existingSample = await sampleModel.getSampleById(id);
+    if (!existingSample) {
+        throw new Error('Próbka o podanym ID nie istnieje');
+    }
+     const deleteAction = 'deleteSample'
+    await sampleModel.insertIntoSampleHistoryUpdateOrDelete(id,deleteAction,existingSample,null,existingSample.createdby)
+
+    const existingSampleAllTest = await sampleTestsModel.getAllTestsFromSample(id)
+    
+   
+
+    if (existingSampleAllTest && existingSampleAllTest.length > 0) {
+        for ( const test of existingSampleAllTest) {
+            await sampleTestsModel.deleteTestFromSample(id,test.id)
+            
+        }
+    }
+
+    
+    
+
+    
+    
     return await sampleModel.deleteSamples(id);
 }
 
