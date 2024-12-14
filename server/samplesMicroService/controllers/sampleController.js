@@ -55,7 +55,7 @@ async function createSample(req,res) {
     } catch (e) {
 
         if (e instanceof ValidationError) {
-            return res.status(400).json({message: e.message, errors: e.errors})
+            return res.status(400).json({message: e.message,name: e.name, errors: e.errors})
         }
 
         res.status(500).json({
@@ -67,6 +67,7 @@ async function createSample(req,res) {
 
 
 async function updateSample(req,res) {
+    
     try {
         const sample = await sampleService.updateSample(req.body,req.params.id)
 

@@ -29,14 +29,15 @@ const updateSampleIdentifer = async (sampleId, identifier,qrCode) => {
 }
 
 
-const updateSample = async(clientId,sampleType,storageConditions,status,createdBy, id) => {
+const updateSample = async(clientId,sampleType,storageConditions,sampleStatus,createdBy, id) => {
+    
     const result = await db.query(`UPDATE samples SET
         clientId = COALESCE($1,clientId),
         sampleType = COALESCE($2,sampleType),
         storageConditions = COALESCE($3,storageConditions),
-        status = COALESCE($4,status),
-        createdBy = COALESCE($5,createdBy),
-        WHERE id = $6 RETURNING *`, [clientId,sampleType,storageConditions,status,createdBy,id])
+        sampleStatus = COALESCE($4,sampleStatus),
+        createdBy = COALESCE($5,createdBy)
+        WHERE id = $6 RETURNING *`, [clientId,sampleType,storageConditions,sampleStatus,createdBy,id])
 
 
         return result.rows[0]

@@ -17,7 +17,7 @@ const getSampleById = async(id) => {
 
 
 const createSample = async(data) => {
-    const {clientId, sampleType,storageConditions, sampleStatus,createdBy }= data;
+    const {clientId, sampleType,storageConditions, sampleStatus,createdBy} = data;
 
     const allowedTypes = [ 'Chemical', 'Biological', 'Microbiological', 'Toxicological', 
         'Environmental', 'Food', 'Pharmaceutical', 'Cosmetological', 
@@ -26,8 +26,7 @@ const createSample = async(data) => {
 
     const allowedStatus = ['Registered', 'ReadyToAnalysis', 'InAnalysis', 'analysisCompleted', 'approved', 'released', 'archivized']
       const result = await validateJsonData.validateStorageJsonData(storageConditions)
-      
-    console.log(result)
+    
 
       if(!result.isValid) {
         throw new validationError(result.errors)
@@ -63,8 +62,10 @@ const createSample = async(data) => {
 
 
 const updateSample = async(data,id) => {
-    const [clientId, sampleType,storageConditions, status,creadtedBy] = data;
-    return await sampleModel.createSample(clientId,sampleType,storageConditions,status,creadtedBy,id);
+   
+    const {clientId, sampleType,storageConditions, status,createdBy} = data;
+    console.log("Data passed to updateSample:", clientId, sampleType, storageConditions, status, createdBy, id);
+    return await sampleModel.updateSample(clientId,sampleType,storageConditions,status,createdBy,id);
 }
 
 

@@ -3,7 +3,7 @@ const sampleTestService = require('../services/sampleTestsServices')
 
 const addTestToSample = async (req,res) => {
     try {
-
+       
         const test = await sampleTestService.addTestToSample(req.params.sampleId, req.body)
 
         if (!test) {
@@ -53,7 +53,7 @@ const getAllTestsFromSample = async (req,res) => {
 
 const getTestByIdFromSample = async(req,res) => {
     try {
-
+      
         const test = await sampleTestService.getTestByIdFromSample(req.params.sampleId, req.params.testId)
 
         if (!test) {
@@ -70,7 +70,7 @@ const getTestByIdFromSample = async(req,res) => {
     } catch (e) {
         res.status(500).json({
             message: 'something went wrong',
-            errorMessage: e
+            errorMessage: e.message
 
         })
     }
