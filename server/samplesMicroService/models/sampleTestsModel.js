@@ -44,6 +44,11 @@ const deleteTestFromSample = async(sampleId, id) => {
     return result.rows[0]
 }
 
+const insertIntoSampleHistoryUpdateAndDelete = async (testId, action,previousState,newState,performedBy,sampleId) => {
+    
+    return await db.query(`INSERT INTO sampleTestsHistory (testId,action,previousState,newState,performedBy,sampleId) VALUES
+        ($1,$2,$3,$4,$5,$6) `,[testId,action,previousState,newState,performedBy,sampleId])
+}
 
 
 module.exports = {
@@ -51,5 +56,6 @@ module.exports = {
     getTestByIdFromSample,
     addTestToSample,
     deleteTestFromSample,
-    updateTestFromSample
+    updateTestFromSample,
+    insertIntoSampleHistoryUpdateAndDelete
 }
