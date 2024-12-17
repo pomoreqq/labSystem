@@ -105,10 +105,11 @@ const deleteSample = async(id) => {
 
     const existingSampleAllTest = await sampleTestsModel.getAllTestsFromSample(id)
     
-   
+   const deleteActionTest = 'deleteTest'
 
     if (existingSampleAllTest && existingSampleAllTest.length > 0) {
         for ( const test of existingSampleAllTest) {
+            await sampleTestsModel.insertIntoSampleHistoryUpdateAndDelete(test.id,deleteActionTest,test,null,test.performedby,id)
             await sampleTestsModel.deleteTestFromSample(id,test.id)
             
         }

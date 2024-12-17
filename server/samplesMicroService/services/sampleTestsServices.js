@@ -61,6 +61,16 @@ const updateTestFromSample = async(sampleId, data, testId) => {
 
 
 const deleteTestFromSample = async (sampleId, testId) => {
+
+    const existingTest = await sampleTestsModel.getTestByIdFromSample(sampleId,testId)
+
+    if (!existingTest) {
+        throw new Error('this test doesnt exist')
+    }
+
+    const deleteAction = 'deleteTest'
+    await sampleTestsModel.insertIntoSampleHistoryUpdateAndDelete(testId,deleteAction,existingTest,null,existingTest.performedby,sampleId)
+
     return await sampleTestsModel.deleteTestFromSample(sampleId,testId)
    
 }
