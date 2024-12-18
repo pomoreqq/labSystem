@@ -9,8 +9,8 @@ const getReservationById = async (id) => {
 };
 
 const createReservation = async (data) => {
-  const { equipmentId, userId, startTime, endTime, purpose } = data;
-  return await reservationModel.createReservation(equipmentId, userId, startTime, endTime, purpose);
+  const { equipmentId, userId, purpose } = data;
+  return await reservationModel.createReservation(equipmentId, userId, purpose);
 };
 
 const updateReservation = async (data, id) => {
