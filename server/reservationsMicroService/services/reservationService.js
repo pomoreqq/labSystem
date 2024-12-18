@@ -9,8 +9,13 @@ const getReservationById = async (id) => {
 };
 
 const createReservation = async (data) => {
-  const { equipmentId, userId, purpose } = data;
-  return await reservationModel.createReservation(equipmentId, userId, purpose);
+  const { equipmentId, userId, endTime, purpose } = data;
+
+  const changedEndTime = new Date(endTime)
+  const changedEndTime2 = changedEndTime.toLocaleDateString(changedEndTime)
+  console.log(changedEndTime2)
+
+  return await reservationModel.createReservation(equipmentId, userId,changedEndTime2, purpose);
 };
 
 const updateReservation = async (data, id) => {

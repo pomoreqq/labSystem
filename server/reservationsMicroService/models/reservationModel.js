@@ -10,10 +10,10 @@ const getReservationById = async (id) => {
   return result.rows[0];
 };
 
-const createReservation = async (equipmentId, userId,  purpose) => {
+const createReservation = async (equipmentId, userId,endTime, purpose) => {
   const result = await db.query(
-    'INSERT INTO reservations (equipmentId, userId, purpose) VALUES ($1, $2, $3) RETURNING *',
-    [equipmentId, userId,  purpose]
+    'INSERT INTO reservations (equipmentId, userId,endTime, purpose) VALUES ($1, $2, $3,$4) RETURNING *',
+    [equipmentId, userId,endTime,  purpose]
   );
   return result.rows[0];
 };

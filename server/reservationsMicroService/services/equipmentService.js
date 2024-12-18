@@ -10,6 +10,20 @@ const getEquipmentById = async (id) => {
 
 const createEquipment = async (data) => {
   const { name, category, status, location } = data;
+
+  const allowedCategories = ['measurmentDevices', 'analyticalEquipment', 'reserachEquipment','laboratoryEquipment', 'itEquipment'
+    ,'chemicalContainers', 'heatingAndCoolingDevices', 'safetyEquipment', 'maintenanceTools', 'otherTools'];
+
+    const allowedStatues = ['inUse', 'offUse'];
+
+  if (!allowedCategories.includes(category)) {
+    throw new Error('Invalid category Type')
+  }
+
+  if (!allowedStatues.includes(status)) {
+    throw new Error('invalid status')
+  }
+
   return await equipmentModel.createEquipment(name, category, status, location);
 };
 
